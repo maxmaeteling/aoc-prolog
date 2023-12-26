@@ -4,8 +4,6 @@
 :- use_module(library(pure_input)).
 :- use_module(library(clpfd)).
 
-:- set_prolog_flag(stack_limit, 2_147_483_648).
-
 lines([L|Ls]) --> string_without("\n", L), "\n", lines(Ls).
 lines([L]) --> string_without("\n", L).
 lines([]) --> [].
