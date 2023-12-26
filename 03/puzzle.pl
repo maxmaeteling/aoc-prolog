@@ -10,18 +10,18 @@ lines([]) --> [].
 
 string_without_number(S) --> string_without("0123456789", S).
 
-find_number([Offs, Num], Offs0) -->
+offset_integer([Offs, Num], Offs0) -->
 	string_without_number(S),
 	digits(Num),
 	{ length(S, L0), Offs #= Offs0+L0 }.
 
-find_numbers([[Offs, Num]|Ns], Offs0) -->
-	find_number([Offs, Num0], Offs0),
+offset_integers([[Offs, Num]|Ns], Offs0) -->
+	offset_integer([Offs, Num0], Offs0),
 	{ number_string(Num, Num0), length(Num0, L0), Offs1 #= Offs+L0 },
-	find_numbers(Ns, Offs1).
-find_numbers([], _) --> string_without_number(_).
+	offset_integers(Ns, Offs1).
+offset_integers([], _) --> string_without_number(_).
 
-parse_numbers(L, N) :- phrase(find_numbers(N, -1), [` `|L]).
+parse_numbers(L, N) :- phrase(offset_integers(N, -1), [` `|L]).
 
 number_valid(Ns, R0, C0, N, Fn, R, C) :-
 	number_chars(N, S),
